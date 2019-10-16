@@ -105,7 +105,7 @@ public class Hack {
 	}
 
 	public static void main(String[] args) {
-		new Hack(5000);
+		new Hack(0);
 	}
 
 	private static void blockWindowsKey() {
