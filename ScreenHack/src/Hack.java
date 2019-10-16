@@ -18,7 +18,7 @@ import com.sun.jna.platform.win32.WinUser.KBDLLHOOKSTRUCT;
 import com.sun.jna.platform.win32.WinUser.LowLevelKeyboardProc;
 import com.sun.jna.platform.win32.WinUser.MSG;
 
-public class Hack {
+final class Hack {
 
 	private static HHOOK hhk;
 	private static LowLevelKeyboardProc keyboardHook;
@@ -81,14 +81,12 @@ public class Hack {
 						System.exit(0);
 					}
 				} catch (NoSuchAlgorithmException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 
 			}
 		});
 		frame.setVisible(true);
-		
+
 		while (time == 0)
 			try {
 				Thread.sleep(1000);
@@ -154,7 +152,30 @@ public class Hack {
 	}
 
 	private static boolean isValid(int keyCode) {
-		return (keyCode >= 0x30 && keyCode <= 0x5A) || keyCode == 0x08 || keyCode == 0x0D;
+		if (keyCode >= 0x30 && keyCode <= 0x5A) // number + letter
+			return true;
+		else
+			switch (keyCode) {
+			case 0x08: // backspace
+			case 0x0D: // enter
+			case 0x14: // caps lock
+			case 0x20: // space
+			case 0xA0: // left shift
+			case 0xBA: // ;:
+			case 0xBB: // =+
+			case 0xBC: // ,<
+			case 0xBD: // -_
+			case 0xBE: // .>
+			case 0xBF: // /?
+			case 0xC0: // `~
+			case 0xDB: // [{
+			case 0xDC: // \|
+			case 0xDD: // ]}
+			case 0xDE: // '"
+				return true;
+			default:
+				return false;
+			}
 	}
 
 	private class Painter extends JComponent {
