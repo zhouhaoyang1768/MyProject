@@ -41,18 +41,6 @@ final class Hack {
 		frame.setUndecorated(true);
 		frame.setAlwaysOnTop(true);
 		frame.add(painter);
-		new Thread(new Runnable() {
-			public void run() {
-				while (running) {
-					try {
-						Thread.sleep(20);
-					} catch (InterruptedException e) {
-					}
-					painter.repaint();
-				}
-			}
-		}).start();
-
 		frame.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() >= 0x30 && e.getKeyCode() <= 0x5A) {
@@ -87,6 +75,18 @@ final class Hack {
 		});
 		frame.setVisible(true);
 
+		new Thread(new Runnable() {
+			public void run() {
+				while (running) {
+					try {
+						Thread.sleep(20);
+					} catch (InterruptedException e) {
+					}
+					painter.repaint();
+				}
+			}
+		}).start();
+
 		while (time == 0)
 			try {
 				Thread.sleep(1000);
@@ -98,6 +98,7 @@ final class Hack {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 		}
+
 		frame.setVisible(false);
 		unblockWindowsKey();
 	}
